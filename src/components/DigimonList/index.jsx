@@ -7,7 +7,7 @@ const DigimonList = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState(null);
-  const pageSize = 10;
+  const pageSize = 12;
 
   useEffect(() => {
     const fetchDigimons = async () => {
@@ -50,15 +50,23 @@ const DigimonList = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Digimon List</h2>
-      <ul className="list-disc pl-5">
-        {digimonList.map((digimon, index) => (
-          <li key={index} className="mb-1">
-            {digimon.name}
-          </li>
+    <div className="p-4">
+      <h2 className="text-xl font-semibold mb-4">Digimon List</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {digimonList.map((digimon) => (
+          <div
+            key={digimon.id}
+            className="flex flex-col items-center justify-center border p-4 rounded-lg"
+          >
+            <img
+              src={digimon.image}
+              alt={digimon.name}
+              className="w-24 h-24 object-cover mb-2"
+            />
+            <span className="text-center">{digimon.name}</span>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className="mt-4 flex justify-between">
         <button
@@ -66,7 +74,20 @@ const DigimonList = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded"
           disabled={page === 1}
         >
-          Previous
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
         </button>
         <span className="text-xl">{`Page ${page} of ${totalPages}`}</span>
         <button
@@ -74,7 +95,20 @@ const DigimonList = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded"
           disabled={page === totalPages}
         >
-          Next
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+            />
+          </svg>
         </button>
       </div>
     </div>

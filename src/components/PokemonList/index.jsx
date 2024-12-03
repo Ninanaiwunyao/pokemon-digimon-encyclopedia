@@ -7,7 +7,7 @@ const PokemonList = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [error, setError] = useState(null);
-  const pageSize = 10;
+  const pageSize = 12;
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -19,7 +19,12 @@ const PokemonList = () => {
         const { results, count } = await fetchPokemonList(pageSize, offset);
 
         if (Array.isArray(results)) {
-          setPokemonList(results);
+          const updatedPokemons = results.map((pokemon) => {
+            const id = pokemon.url.split("/")[6];
+            return { ...pokemon, id };
+          });
+
+          setPokemonList(updatedPokemons);
           setTotalPages(Math.ceil(count / pageSize));
         } else {
           throw new Error("Pokémon data format error");
@@ -56,15 +61,23 @@ const PokemonList = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Pokémon List</h2>
-      <ul className="list-disc pl-5">
-        {pokemonList.map((pokemon, index) => (
-          <li key={index} className="mb-1">
-            {pokemon.name}
-          </li>
+    <div className="p-4">
+      <h2 className="text-xl font-semibold mb-4">Pokemon List</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {pokemonList.map((pokemon) => (
+          <div
+            key={pokemon.id}
+            className="flex flex-col items-center justify-center border p-4 rounded-lg"
+          >
+            <img
+              src={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}
+              alt={pokemon.name}
+              className="w-24 h-24 object-fit mb-2"
+            />
+            <span className="text-center">{pokemon.name}</span>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className="mt-4 flex justify-between">
         <button
@@ -72,7 +85,20 @@ const PokemonList = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded"
           disabled={page === 1}
         >
-          Previous
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
         </button>
         <span className="text-xl">{`Page ${page} of ${totalPages}`}</span>
         <button
@@ -80,7 +106,20 @@ const PokemonList = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded"
           disabled={page === totalPages}
         >
-          Next
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+            />
+          </svg>
         </button>
       </div>
     </div>
