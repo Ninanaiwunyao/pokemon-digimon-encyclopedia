@@ -1,18 +1,27 @@
 import DigimonList from "@/components/DigimonList";
 import PokemonList from "@/components/PokemonList";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [isPokemon, setIsPokemon] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1); // 当前页数
-  const [totalPages, setTotalPages] = useState(1); // 总页数
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/pokemon") {
+      setIsPokemon(true);
+    } else if (location.pathname === "/digimon") {
+      setIsPokemon(false);
+    }
+  }, [location.pathname]);
 
   const handleToggle = (isPokemonSelected) => {
     setIsPokemon(isPokemonSelected);
-    setCurrentPage(1); // 切换时重置到第一页
+    setCurrentPage(1);
     if (isPokemonSelected) {
       navigate("/pokemon");
     } else {
@@ -22,7 +31,6 @@ const Home = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    // URL 更新
     if (isPokemon) {
       navigate(`/pokemon?page=${newPage}`);
     } else {
@@ -53,7 +61,6 @@ const Home = () => {
       </div>
 
       <div className="mt-4">
-        {/* 分页按钮 */}
         <div className="flex justify-center space-x-4">
           {currentPage > 1 && (
             <button
