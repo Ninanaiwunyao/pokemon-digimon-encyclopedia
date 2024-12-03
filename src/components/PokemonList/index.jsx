@@ -3,27 +3,57 @@ import React, { useEffect, useState } from "react";
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [error, setError] = useState(null);
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchPokemons = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const pokemons = await fetchPokemonList(10);
-        if (pokemons && Array.isArray(pokemons)) {
-          setPokemonList(pokemons);
+        const offset = (page - 1) * pageSize;
+        const { results, count } = await fetchPokemonList(pageSize, offset);
+
+        if (Array.isArray(results)) {
+          setPokemonList(results);
+          setTotalPages(Math.ceil(count / pageSize));
         } else {
-          console.error("Pokémon data format error:", pokemons);
+          throw new Error("Pokémon data format error");
         }
       } catch (error) {
+        setError("Failed to load Pokémon data. Please try again later.");
         console.error("Error fetching Pokémon:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPokemons();
-  }, []);
+  }, [page]);
 
-  if (pokemonList.length === 0) {
+  if (loading) {
     return <div>Loading Pokémon...</div>;
   }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
 
   return (
     <div>
@@ -35,6 +65,24 @@ const PokemonList = () => {
           </li>
         ))}
       </ul>
+
+      <div className="mt-4 flex justify-between">
+        <button
+          onClick={handlePreviousPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span className="text-xl">{`Page ${page} of ${totalPages}`}</span>
+        <button
+          onClick={handleNextPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

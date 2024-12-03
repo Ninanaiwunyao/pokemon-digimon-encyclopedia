@@ -5,6 +5,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/pokemon" element={<Home />} />
+        <Route path="/digimon" element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/pokemon/:id" element={<Detail />} />
         <Route path="/digimon/:id" element={<Detail />} />

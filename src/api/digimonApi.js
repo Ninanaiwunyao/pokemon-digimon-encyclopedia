@@ -7,14 +7,15 @@ export const fetchDigimonList = async (page = 1, pageSize = 10) => {
     );
     const data = await response.json();
     if (data && data.content && Array.isArray(data.content)) {
-      return data.content;
-    } else {
-      console.error("Digimons data is not in the expected format:", data);
-      return [];
+      return {
+        results: data.content,
+        totalElements: data.pageable.totalElements,
+        totalPages: data.pageable.totalPages,
+      };
     }
   } catch (error) {
     console.error("Error fetching Digimons:", error);
-    return [];
+    return { results: [], totalElements: 0, totalPages: 0 };
   }
 };
 

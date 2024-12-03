@@ -9,10 +9,13 @@ export const fetchPokemonList = async (limit = 20, offset = 0) => {
       throw new Error("Failed to fetch Pokémon data");
     }
     const data = await response.json();
-    return data.results;
+    return {
+      results: data.results,
+      count: data.count,
+    };
   } catch (error) {
     console.error("Error fetching Pokémon list:", error);
-    return [];
+    return { results: [], count: 0 };
   }
 };
 
