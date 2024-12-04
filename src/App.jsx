@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Detail from "./pages/Detail";
+import DetailPage from "./pages/DetailPage";
 import Home from "./pages/Home";
 function App() {
   return (
@@ -8,8 +8,8 @@ function App() {
         <Route path="/pokemon" element={<Home />} />
         <Route path="/digimon" element={<Home />} />
         <Route path="/" element={<Home />} />
-        <Route path="/pokemon/:id" element={<Detail />} />
-        <Route path="/digimon/:id" element={<Detail />} />
+        <Route path="/pokemon/:id" element={<DetailPage type="pokemon" />} />
+        <Route path="/digimon/:id" element={<DetailPage type="digimon" />} />
       </Routes>
     </Router>
   );

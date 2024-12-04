@@ -1,6 +1,7 @@
 import { fetchDigimonList } from "@/api/digimonApi";
 import Pagination from "@/components/Pagination";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DigimonList = () => {
   const [digimonList, setDigimonList] = useState([]);
@@ -9,6 +10,7 @@ const DigimonList = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState(null);
   const pageSize = 12;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDigimons = async () => {
@@ -44,6 +46,7 @@ const DigimonList = () => {
         {digimonList.map((digimon) => (
           <div
             key={digimon.id}
+            onClick={() => navigate(`/digimon/${digimon.id}`)}
             className="flex flex-col items-center justify-center border p-4 rounded-lg bg-white"
           >
             <img

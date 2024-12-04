@@ -26,7 +26,7 @@ export const fetchDigimonDetail = async (id) => {
       throw new Error("Failed to fetch Digimon detail");
     }
     const data = await response.json();
-    return data.data;
+    return data;
   } catch (error) {
     console.error("Error fetching Digimon detail:", error);
     return null;

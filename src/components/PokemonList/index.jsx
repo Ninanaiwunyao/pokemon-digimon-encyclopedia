@@ -1,6 +1,7 @@
 import { fetchPokemonList } from "@/api/pokemonApi";
 import Pagination from "@/components/Pagination";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -9,6 +10,7 @@ const PokemonList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [error, setError] = useState(null);
   const pageSize = 12;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -56,6 +58,7 @@ const PokemonList = () => {
           <div
             key={pokemon.id}
             className="flex flex-col items-center justify-center border p-4 rounded-lg bg-white"
+            onClick={() => navigate(`/pokemon/${pokemon.id}`)}
           >
             <img
               src={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}
