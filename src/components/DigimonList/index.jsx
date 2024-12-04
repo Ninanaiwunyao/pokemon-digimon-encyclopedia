@@ -38,31 +38,18 @@ const DigimonList = () => {
     return <div className="text-red-500">{error}</div>;
   }
 
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Digimon List</h2>
+    <div className="p-12">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {digimonList.map((digimon) => (
           <div
             key={digimon.id}
-            className="flex flex-col items-center justify-center border p-4 rounded-lg"
+            className="flex flex-col items-center justify-center border p-4 rounded-lg bg-white"
           >
             <img
               src={digimon.image}
               alt={digimon.name}
-              className="w-24 h-24 object-cover mb-2"
+              className="w-24 h-24 object-fit mb-2"
             />
             <span className="text-center">{digimon.name}</span>
           </div>

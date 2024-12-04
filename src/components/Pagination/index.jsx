@@ -11,7 +11,7 @@ const Pagination = ({
       <div className="mt-16 flex justify-between w-96">
         <button
           onClick={onPreviousPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-red-500 text-white rounded"
           disabled={currentPage === 1}
         >
           <svg
@@ -29,10 +29,10 @@ const Pagination = ({
             />
           </svg>
         </button>
-        <span className="text-xl">{`Page ${currentPage} of ${totalPages}`}</span>
+        <span className="text-xl text-white">{`Page ${currentPage} of ${totalPages}`}</span>
         <button
           onClick={onNextPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-red-500 text-white rounded"
           disabled={currentPage === totalPages}
         >
           <svg

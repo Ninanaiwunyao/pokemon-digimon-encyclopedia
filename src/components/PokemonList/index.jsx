@@ -50,13 +50,12 @@ const PokemonList = () => {
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Pokemon List</h2>
+    <div className="p-12">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {pokemonList.map((pokemon) => (
           <div
             key={pokemon.id}
-            className="flex flex-col items-center justify-center border p-4 rounded-lg"
+            className="flex flex-col items-center justify-center border p-4 rounded-lg bg-white"
           >
             <img
               src={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}

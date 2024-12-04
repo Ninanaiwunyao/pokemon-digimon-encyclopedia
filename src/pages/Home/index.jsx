@@ -1,4 +1,5 @@
 import DigimonList from "@/components/DigimonList";
+import Header from "@/components/Header";
 import PokemonList from "@/components/PokemonList";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import React, { useEffect, useState } from "react";
@@ -29,20 +30,9 @@ const Home = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    if (isPokemon) {
-      navigate(`/pokemon?page=${newPage}`);
-    } else {
-      navigate(`/digimon?page=${newPage}`);
-    }
-  };
-
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">
-        Pokémon and Digimon Encyclopedia
-      </h1>
+    <div className="bg-black min-h-screen">
+      <Header />
 
       <ToggleSwitch isPokemon={isPokemon} onToggle={handleToggle} />
 
