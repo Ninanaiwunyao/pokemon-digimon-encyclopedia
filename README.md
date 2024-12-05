@@ -1,8 +1,32 @@
-# React + Vite
+# Pokémon & Digimon Encyclopedia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple web application showcasing detailed information about Pokémon and Digimon characters.
 
-Currently, two official plugins are available:
+## 🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Visit the app here: [Pokémon & Digimon Encyclopedia](https://pokemon-digimon-encyclopedia.web.app)
+
+---
+
+## 🛠 Features
+
+- Browse detailed information about Pokémon and Digimon.
+- View abilities, descriptions, and additional details.
+- Elegant and responsive UI with themed color schemes.
+- Smooth loading animations for enhanced user experience.
+
+---
+
+## 🔧 Technologies Used
+
+- React.js
+- Tailwind CSS
+- Firebase Hosting
+- Fetch API for API requests
+
+---
+
+## 🎉 Acknowledgments
+
+- Pokémon API: [PokeAPI](https://pokeapi.co/)
+- Digimon API: [Digi-API](https://digi-api.com/)
