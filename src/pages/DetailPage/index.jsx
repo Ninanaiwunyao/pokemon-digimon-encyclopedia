@@ -1,13 +1,14 @@
 import { fetchDigimonDetail } from "@/api/digimonApi";
 import { fetchPokemonDetail } from "@/api/pokemonApi";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DetailPage = ({ type }) => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,7 @@ const DetailPage = ({ type }) => {
               Weight: result.weight,
               "Base Experience": result.base_experience,
             },
+            abilities: result.abilities || [],
           });
         } else if (type === "digimon") {
           const result = await fetchDigimonDetail(id);
@@ -35,6 +37,7 @@ const DetailPage = ({ type }) => {
               Date: result.releaseDate,
               Evolutions: result.nextEvolutions?.length || "N/A",
             },
+            descriptions: result.descriptions || [],
           });
         }
       } catch (err) {
@@ -55,6 +58,53 @@ const DetailPage = ({ type }) => {
     return <div className="text-red-500">{error}</div>;
   }
 
+  const renderMoreInformation = () => {
+    if (type === "pokemon") {
+      return (
+        <div>
+          <h2 className="text-2xl font-bold text-red-600">Abilities</h2>
+          <ul className="mt-2 text-gray-300 space-y-2">
+            {data.abilities.map((ability, index) => (
+              <li
+                key={index}
+                className="flex justify-center items-center gap-4 text-center "
+              >
+                <span className="text-yellow-400 font-semibold">
+                  {ability.ability.name}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {ability.is_hidden ? "Hidden Ability" : "Standard Ability"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    } else if (type === "digimon") {
+      const validDescription =
+        Array.isArray(data.descriptions) &&
+        data.descriptions.find((desc) => desc.description)
+          ? data.descriptions.find((desc) => desc.description)
+          : {
+              origin: "default",
+              description: "No additional information available.",
+            };
+
+      return (
+        <div>
+          <h2 className="text-2xl font-bold text-red-600">
+            Additional Information
+          </h2>
+          <p className="text-md text-gray-300 mt-2">
+            {validDescription.description}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">
+            <strong>Source:</strong> {validDescription.origin}
+          </p>
+        </div>
+      );
+    }
+  };
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-black via-gray-800 to-gray-900 p-4">
       <div className="p-6 max-w-4xl w-full bg-gray-800 rounded-xl shadow-lg">
@@ -78,14 +128,14 @@ const DetailPage = ({ type }) => {
             </ul>
           </div>
         </div>
-        <div className="mt-8 text-center">
-          <h2 className="text-2xl font-bold text-red-600">
-            Additional Information
-          </h2>
-          <p className="text-md text-gray-300 mt-2">
-            This section can be used to add more details about the character,
-            abilities, or any other relevant information.
-          </p>
+        <div className="mt-8 text-center">{renderMoreInformation()}</div>
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => navigate("/")}
+            className="px-6 py-2 bg-red-600 text-white font-bold rounded-lg shadow-md hover:bg-red-500 transition duration-300"
+          >
+            Back to Home
+          </button>
         </div>
       </div>
     </div>
