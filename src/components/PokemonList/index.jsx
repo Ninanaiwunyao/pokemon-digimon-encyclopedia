@@ -2,6 +2,7 @@ import { fetchPokemonList } from "@/api/pokemonApi";
 import Pagination from "@/components/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -44,7 +45,7 @@ const PokemonList = () => {
   }, [page]);
 
   if (loading) {
-    return <div>Loading Pokémon...</div>;
+    return <Loading />;
   }
 
   if (error) {

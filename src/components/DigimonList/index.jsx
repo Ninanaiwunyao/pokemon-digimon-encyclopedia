@@ -2,6 +2,7 @@ import { fetchDigimonList } from "@/api/digimonApi";
 import Pagination from "@/components/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const DigimonList = () => {
   const [digimonList, setDigimonList] = useState([]);
@@ -33,7 +34,7 @@ const DigimonList = () => {
   }, [page]);
 
   if (loading) {
-    return <div>Loading Digimons...</div>;
+    return <Loading />;
   }
 
   if (error) {

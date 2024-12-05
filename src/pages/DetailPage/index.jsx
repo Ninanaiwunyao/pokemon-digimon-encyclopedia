@@ -2,6 +2,7 @@ import { fetchDigimonDetail } from "@/api/digimonApi";
 import { fetchPokemonDetail } from "@/api/pokemonApi";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 const DetailPage = ({ type }) => {
   const { id } = useParams();
@@ -51,7 +52,7 @@ const DetailPage = ({ type }) => {
   }, [id, type]);
 
   if (loading) {
-    return <div>Loading {type} details...</div>;
+    return <Loading />;
   }
 
   if (error) {
